@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leave Tracker — {{ year }}</title>
+    <meta name="description" content="Track office leaves and holidays" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>" />
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>📅 Leave Tracker</h1>
+                <div class="year-selector">
+                    <button class="year-btn" id="year-prev" onclick="changeYear(-1)">◀</button>
+                    <span class="year-display" id="year-display">{{ year }}</span>
+                    <button class="year-btn" id="year-next" onclick="changeYear(1)">▶</button>
+                </div>
+            </div>
+            <div class="header-settings">
+                <label for="carry-forward">Carry Forward:</label>
+                <input type="number" id="carry-forward" min="0" step="0.5" value="0" />
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-grid" id="stats-grid">
+            <div class="stat-card balance">
+                <div class="label">Balance</div>
+                <div class="stat-value-wrap">
+                    <span class="value" id="stat-balance">—</span>
+                    <button class="edit-stat-btn" onclick="editBalance()" title="Edit">✏️</button>
+                </div>
+            </div>
+            <div class="stat-card holidays">
+                <div class="label">Holidays</div>
+                <div class="value" id="stat-holidays">—</div>
+            </div>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="mode-toggle-bar">
+            <button class="mode-btn active" id="mode-leave" onclick="setMode('leave')">Mark Leave</button>
+            <button class="mode-btn" id="mode-planned" onclick="setMode('planned')">Mark Planned</button>
+            <button class="mode-btn" id="mode-holiday" onclick="setMode('holiday')">Mark Holiday</button>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item"><span class="legend-dot leave"></span> Leave</div>
+            <div class="legend-item"><span class="legend-dot planned"></span> Planned</div>
+            <div class="legend-item"><span class="legend-dot holiday"></span> Holiday</div>
+            <div class="legend-item"><span class="legend-dot today"></span> Today</div>
+            <div class="legend-item"><span class="legend-dot weekend"></span> Weekend</div>
+        </div>
+
+        <!-- Calendar -->
+        <section class="calendar-section">
+            <div class="calendar-grid" id="calendar-grid"></div>
+        </section>
+
+        <div class="bottom-panels">
+            <!-- Projections -->
+            <section class="projection-section">
+                <h2>📈 Monthly Projections</h2>
+                <div class="table-container">
+                    <table class="projection-table">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>+Added</th>
+                                <th>Taken</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="projection-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Holiday Management -->
+            <section class="holiday-manager-section">
+                <div class="section-header">
+                    <h2>🏖️ Holidays</h2>
+                    <button class="add-holiday-btn" onclick="promptAddHoliday()">+ Add Holiday</button>
+                </div>
+                <ul class="holiday-manager-list" id="holiday-manager-list"></ul>
+            </section>
+        </div>
+
+        <!-- History -->
+        <section class="history-section">
+            <h2>📋 Leave History</h2>
+            <ul class="history-list" id="history-list"></ul>
+        </section>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="/static/main.js"></script>
+</body>
+
+</html>
